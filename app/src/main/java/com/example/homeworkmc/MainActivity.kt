@@ -12,11 +12,13 @@ import androidx.room.Room
 import kotlinx.coroutines.GlobalScope
 import com.google.android.material.button.MaterialButton
 import android.view.View
+import androidx.compose.ui.platform.LocalContext
 import com.example.homeworkmc.repository.UserRepository
 import kotlinx.coroutines.launch
 
 
 class MainActivity( private val userRepository: UserRepository = Graph.userRepository) : AppCompatActivity() {
+
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,25 +28,31 @@ class MainActivity( private val userRepository: UserRepository = Graph.userRepos
         val password = findViewById<EditText>(R.id.password)
         val button = findViewById<MaterialButton>(R.id.loginbutton)
         val registration = findViewById<MaterialButton>(R.id.register)
+        var variabla: Boolean
 
-
+        username.text.clear()
+        password.text.clear()
 
         button.setOnClickListener(View.OnClickListener {
             val user = username.text.toString()
             val pass = password.text.toString()
 
+
             GlobalScope.launch {
-                var variabla: Boolean =userRepository.getUser(username = user, password = pass)
+                variabla=userRepository.getUser(username = user, password = pass)
 
                 if (variabla==true) {
 
+
                     val intent = Intent(this@MainActivity, Activityhome::class.java)
                     startActivity(intent)
-                } else {
-                    //Toast.makeText(this@MainActivity, "LGODIN FAILD", Toast.LENGTH_SHORT).show()
-
                 }
+
             }
+
+
+
+
             })
 
         registration.setOnClickListener(View.OnClickListener {

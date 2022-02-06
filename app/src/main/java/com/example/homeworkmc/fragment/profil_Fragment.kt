@@ -47,6 +47,5 @@ class profil_Fragment : Fragment() {
 
     }
 
-
-    }
+}
 
