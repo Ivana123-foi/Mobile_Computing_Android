@@ -24,16 +24,29 @@ import com.example.homeworkmc.ActivityRegistration
 class profil_Fragment : Fragment() {
 
 
+    private lateinit var button: ImageButton
+    private  lateinit var v: View
+
    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-       return  inflater.inflate(R.layout.profil, container, false)
+       v=  inflater.inflate(R.layout.profil, container, false)
+
+       return v
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        button = v.findViewById(R.id.button_profile)
+        button.setOnClickListener(View.OnClickListener {
+           Toast.makeText(activity, "text fragment", Toast.LENGTH_SHORT).show()
+        })
 
     }
 
 
-
-}
+    }
 
