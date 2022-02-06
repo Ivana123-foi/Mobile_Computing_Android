@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back1"
+    tools:context=".MainActivity"
+    >
+
+    <TextView
+        android:id="@+id/signInsign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signInsign"
+        android:id="@+id/username"
+        android:hint="Username"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:background="@drawable/round_shape"
+        android:layout_margin="15dp"
+        android:padding="20dp"
+        android:drawableLeft="@drawable/ic_person"
+        android:drawablePadding="15dp"
+        android:inputType="text"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:id="@+id/password"
+        android:hint="Password"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:background="@drawable/round_shape"
+        android:layout_margin="15dp"
+        android:padding="20dp"
+        android:drawableLeft="@drawable/ic_lock"
+        android:drawablePadding="15dp"
+        android:inputType="textPassword"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginbutton"
+        android:layout_below="@+id/password"
+        android:text="LOGIN"
+        android:backgroundTint="#ffffff"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="25dp"
+        android:textColor="@color/black"
+
+        />
+
+
+    <TextView
+        android:id="@+id/forgotpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="Forgot password?"
+        android:textColor="@color/white"
+
+        android:textSize="12dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:layout_marginLeft="260sp"
+        android:layout_marginTop="-8dp"
+        android:background="@android:color/transparent"
+        android:text="Register"
+        android:textColor="@color/white"
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginbutton"
+        android:id="@+id/or"
+        android:textColor="@color/white"
+        android:text="OR"
+        android:textSize="12dp"
+        android:layout_centerHorizontal="true"
+
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginPin"
+        android:layout_below="@+id/or"
+        android:text="Login with pin "
+        android:background="@android:color/transparent"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:textColor="@color/white"
+        />
+
+</RelativeLayout>
