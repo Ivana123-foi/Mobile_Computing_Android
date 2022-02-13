@@ -3,21 +3,12 @@ package com.example.homeworkmc
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.lifecycle.ViewModel
 import com.example.homeworkmc.entity.User
 import com.example.homeworkmc.repository.UserRepository
 import com.google.android.material.button.MaterialButton
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewModelScope
-import androidx.room.Database
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ActivityRegistration( private val userRepository: UserRepository = Graph.userRepository) : AppCompatActivity() {

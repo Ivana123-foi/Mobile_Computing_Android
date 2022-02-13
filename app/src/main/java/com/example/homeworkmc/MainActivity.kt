@@ -13,6 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import com.google.android.material.button.MaterialButton
 import android.view.View
 import androidx.compose.ui.platform.LocalContext
+import com.example.homeworkmc.entity.User
 import com.example.homeworkmc.repository.UserRepository
 import kotlinx.coroutines.launch
 
@@ -29,6 +30,8 @@ class MainActivity( private val userRepository: UserRepository = Graph.userRepos
         val button = findViewById<MaterialButton>(R.id.loginbutton)
         val registration = findViewById<MaterialButton>(R.id.register)
         var variabla: Boolean
+        var id_user: User
+
 
         username.text.clear()
         password.text.clear()
@@ -41,16 +44,18 @@ class MainActivity( private val userRepository: UserRepository = Graph.userRepos
             GlobalScope.launch {
                 variabla=userRepository.getUser(username = user, password = pass)
 
+
                 if (variabla==true) {
 
+                    id_user = userRepository.getUserID(username=user)
+                    var id: Long  = id_user.userID
 
                     val intent = Intent(this@MainActivity, Activityhome::class.java)
+                    intent.putExtra("id", id)
                     startActivity(intent)
                 }
 
             }
-
-
 
 
             })

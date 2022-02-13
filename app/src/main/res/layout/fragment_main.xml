@@ -19,6 +19,17 @@
         android:layout_width="match_parent"
         android:layout_height="100dp">
 
+        <ImageButton
+            android:id="@+id/item_button_edit"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/ic_edit"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/item_title" />
 
         <TextView
             android:id="@+id/item_title"
@@ -47,7 +58,7 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="56dp"
-            android:layout_marginEnd="39dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

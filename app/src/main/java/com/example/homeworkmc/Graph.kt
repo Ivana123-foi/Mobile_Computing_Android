@@ -3,6 +3,7 @@ package com.example.homeworkmc
 import android.content.Context
 import androidx.room.Room
 import com.example.homeworkmc.DB.Database
+import com.example.homeworkmc.repository.ReminderRepository
 import com.example.homeworkmc.repository.UserRepository
 
 object Graph {
@@ -13,6 +14,13 @@ object Graph {
             UserDao = database.userDao()
         )
     }
+
+    val reminderRepository by lazy {
+        ReminderRepository(
+            ReminderDao = database.reminderDao()
+        )
+    }
+
 
     fun provide(context: Context)
     {
