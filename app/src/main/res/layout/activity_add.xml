@@ -148,10 +148,11 @@
             android:id="@+id/take_picture_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="180dp"
+            android:layout_marginTop="30dp"
             android:backgroundTint="@color/blueButton"
-            android:text="Take picture" />
+            android:text="Take picture"
+            android:visibility="invisible"/>
 
     </RelativeLayout>
 
