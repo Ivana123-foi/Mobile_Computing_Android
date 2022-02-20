@@ -14,7 +14,7 @@ android {
     }
     defaultConfig {
         applicationId "com.example.homeworkmc"
-        minSdk 21
+        minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -74,4 +74,7 @@ dependencies {
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+
+    //workManager
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 }

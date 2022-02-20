@@ -5,14 +5,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.room.Database
-import androidx.room.Room
 import kotlinx.coroutines.GlobalScope
 import com.google.android.material.button.MaterialButton
 import android.view.View
-import androidx.compose.ui.platform.LocalContext
 import com.example.homeworkmc.entity.User
 import com.example.homeworkmc.repository.UserRepository
 import kotlinx.coroutines.launch
@@ -49,6 +44,7 @@ class MainActivity( private val userRepository: UserRepository = Graph.userRepos
 
                     id_user = userRepository.getUserID(username=user)
                     var id: Long  = id_user.userID
+
 
                     val intent = Intent(this@MainActivity, Activityhome::class.java)
                     intent.putExtra("id", id)

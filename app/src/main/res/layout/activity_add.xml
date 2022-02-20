@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityAdd"
+    android:background="@drawable/back2"
     android:screenOrientation="portrait"
-    android:background="@drawable/back2">
+    tools:context=".ActivityAdd">
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
@@ -39,8 +39,8 @@
             android:id="@+id/button_delete"
             android:layout_width="45dp"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="300dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/shape_picture"
             android:backgroundTint="@color/redButton"
             android:src="@drawable/ic_delete"
@@ -62,11 +62,11 @@
         android:id="@+id/title_add"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:background="@drawable/round_shape"
         android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
+        android:background="@drawable/round_shape"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,9 +79,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
         android:text="Message:"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_add" />
@@ -92,33 +92,66 @@
         android:layout_height="45dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="12dp"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
         android:background="@drawable/round_shape"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text2" />
 
     <RelativeLayout
+        android:id="@+id/picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/message_add">
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36sp"
+            android:layout_marginStart="16sp"
+            android:text="Date of the task:"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="20dp" />
+
+        <DatePicker
+            android:id="@+id/datePicker1"
+            android:layout_width="311dp"
+            android:layout_height="134dp"
+            android:layout_marginTop="76dp"
+            android:layout_marginStart="36dp"
+            android:background="@color/white"
+            android:calendarTextColor="@color/white"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintStart_toStartOf="parent" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/take_picture"
-        app:layout_constraintTop_toBottomOf="@+id/message_add"
-        android:gravity="center"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/picker">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/take_picture_view"/>
+            android:id="@+id/take_picture_view"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_width="120dp"
+            android:layout_height="82dp" />
 
         <Button
             android:id="@+id/take_picture_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="180dp"
             android:backgroundTint="@color/blueButton"
-            android:text="Take picture"
-            />
+            android:text="Take picture" />
 
     </RelativeLayout>
 
@@ -135,7 +168,6 @@
             android:id="@+id/save_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
             android:backgroundTint="@color/blueButton"
             android:text="Create" />
 
@@ -144,7 +176,6 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
-            android:layout_marginTop="48dp"
             android:backgroundTint="@color/blueButton"
             android:text="Save" />
     </RelativeLayout>

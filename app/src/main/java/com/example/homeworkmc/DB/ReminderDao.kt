@@ -13,8 +13,12 @@ abstract class ReminderDao {
     @Query(value = "SELECT * FROM Reminder WHERE user_id= :id_user")
     abstract suspend fun getReminderData(id_user: Long) : List<Reminder>
 
+    @Query(value = "SELECT * FROM Reminder WHERE creation_time= :localtime AND user_id= :id_user")
+    abstract suspend fun getReminderByDate(localtime: String,id_user: Long ) : List<Reminder>
+
     @Query("DELETE FROM Reminder WHERE title = :title")
     abstract fun deleteBytitle(title: String)
+
 
      @Update(onConflict = OnConflictStrategy.REPLACE)
      abstract suspend fun updateReminder(entity: Reminder)

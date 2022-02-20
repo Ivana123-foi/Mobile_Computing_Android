@@ -8,6 +8,10 @@ import kotlinx.coroutines.flow.Flow
 class ReminderRepository(private val ReminderDao: ReminderDao) {
 
 
+    suspend fun getReminderByTime(date: String, id: Long): List<Reminder>
+    {
+        return ReminderDao.getReminderByDate(date, id)
+    }
     suspend fun getReminder(id: Long): List<Reminder>
     {
         return ReminderDao.getReminderData(id)
@@ -16,7 +20,6 @@ class ReminderRepository(private val ReminderDao: ReminderDao) {
     {
         return ReminderDao.deleteBytitle(title)
     }
-
    suspend fun addReminder(reminder: Reminder)
    {
        ReminderDao.insert(reminder)

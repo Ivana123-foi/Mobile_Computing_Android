@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_main.view.*
 
         holder.itemTitle.text=currentItem.title
         holder.itemDetails.text=currentItem.message
+        holder.itemDate.text=currentItem.creation_time
 
     }
 
@@ -35,6 +36,7 @@ import kotlinx.android.synthetic.main.fragment_main.view.*
 
         var itemTitle: TextView = itemView.item_title
         var itemDetails: TextView = itemView.item_description
+        var itemDate: TextView = itemView.item_date
         val buttonEdit: ImageButton = itemView.item_button_edit
 
 
@@ -49,18 +51,16 @@ import kotlinx.android.synthetic.main.fragment_main.view.*
             if (position!= RecyclerView.NO_POSITION){
                 listener.onItemClick(title.text.toString())
             }
-           /* val position: Int = adapterPosition
-            if (position!= RecyclerView.NO_POSITION){
-                listener.onItemClick(position)
-            }*/
 
         }
     }
 
      interface OnItemClickListener {
-         //fun onItemClick(position: Int)
+
          fun onItemClick(title : String)
+
      }
+
 
 
  }

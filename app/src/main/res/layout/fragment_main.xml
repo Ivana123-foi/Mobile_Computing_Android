@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recycle_view"
     android:layout_margin="5dp"
     app:cardBackgroundColor="@color/white"
-    android:outlineSpotShadowColor="@color/black"
     app:cardCornerRadius="12dp"
     app:cardElevation="3dp"
     app:contentPadding="4dp"
@@ -17,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="110dp">
 
         <ImageButton
             android:id="@+id/item_button_edit"
@@ -36,7 +34,7 @@
             android:layout_width="236dp"
             android:layout_height="39dp"
             android:layout_marginStart="32dp"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="52dp"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,10 +46,22 @@
             android:layout_height="20dp"
             android:layout_marginStart="32dp"
             android:layout_marginBottom="23dp"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/item_title" />
+
+        <TextView
+            android:id="@+id/item_date"
+            android:layout_width="280dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="23dp"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_description"
+            app:layout_constraintVertical_bias="0.0" />
 
         <CheckBox
             android:id="@+id/checkbox_task"
