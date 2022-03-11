@@ -8,6 +8,7 @@ import com.example.homeworkmc.repository.UserRepository
 
 object Graph {
     lateinit var database: Database
+    lateinit var contextApp : Context
 
     val userRepository by lazy {
         UserRepository(
@@ -24,6 +25,7 @@ object Graph {
 
     fun provide(context: Context)
     {
+        contextApp = context
         database = Room.databaseBuilder(context, Database::class.java, "data.db").fallbackToDestructiveMigration().build()
 
     }

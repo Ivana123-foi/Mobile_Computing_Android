@@ -34,6 +34,7 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
     private lateinit var saveButton: Button
     private lateinit var createButton: Button
     private lateinit var deleteButton: ImageButton
+    private lateinit var locationButton: Button
 
     //picture
     private val  PERMISSION_COD: Int = 1000;
@@ -52,7 +53,7 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
     ///
 
     //todaysDate
-    var mTime = Date()
+    //var mTime = Date()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,14 +61,13 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
         binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         //dateadd
 
         val datePicker = findViewById<DatePicker>(R.id.datePicker1)
         val today = Calendar.getInstance()
-        var msg : String = SimpleDateFormat("yyyy-M-d").format(mTime)
+        //var msg : String = SimpleDateFormat("yyyy-M-d").format(mTime)
 
+        var msg : String = ""
 
         datePicker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
             today.get(Calendar.DAY_OF_MONTH)
@@ -75,6 +75,11 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
         ) { view, year, month, day ->  val month = month + 1
             msg = "$year-$month-$day"
         }
+
+
+
+
+
 
         ///
 
@@ -88,6 +93,7 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
 
         //For add
         val id_user : Long = intent.getLongExtra("id", -1)
+
         val title = findViewById<EditText>(R.id.title_add)
         val message = findViewById<EditText>(R.id.message_add)
         //
@@ -122,40 +128,113 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
 
         }
     //
+/////LOCATION
+
+
+
+        locationButton = findViewById(R.id.location_button)
+
+        locationButton.setOnClickListener(View.OnClickListener {
+            val inte = Intent(this@ActivityAdd, ActivityMap::class.java)
+            inte.putExtra("id_u", id_user)
+            inte.putExtra("TitleL", title.text.toString())
+            inte.putExtra("MessageL", message.text.toString())
+            inte.putExtra("reminderID", reminderID)
+            inte.putExtra("user_id_change", id)
+            inte.putExtra("title_update", titleUpdate)
+            inte.putExtra("message_update", messageUpdate)
+            startActivity(inte)
+        })
+
+
+////////
+        //
+        // Toast.makeText(this, ". ${reminderID} ", Toast.LENGTH_SHORT).show()
 
         if(titleUpdate==null) {
 
+
+            val titleLocation : String? = intent.getStringExtra("titleL" )
+            val messageLocation : String? = intent.getStringExtra("messageL")
+            val latitude : Double = intent.getDoubleExtra("latitude" , -1.0)
+            val longitude : Double = intent.getDoubleExtra("longitude", -1.0)
+
+            //Toast.makeText(this, "You clicked item no. ${latitude}. ${longitude} ", Toast.LENGTH_SHORT).show()
+            var lat : Double? = null
+            var lon : Double?= null
+
+            if (titleLocation != null && messageLocation!=null && latitude!= -1.0) {
+                title.setText(titleLocation, TextView.BufferType.EDITABLE)
+                message.setText(messageLocation, TextView.BufferType.EDITABLE)
+                //fToast.makeText(this, "You clicked item no. ${latitude}. ${longitude} ", Toast.LENGTH_SHORT).show()
+                lat = latitude
+                lon = longitude
+            }
+            else
+            {
+                lat = null
+                lon = null
+
+
+            }
+
+            //////////
             saveButton = findViewById(R.id.save_button)
-            binding.saveButton.setOnClickListener(View.OnClickListener {
+            //Toast.makeText(this, "You clicked item no. ${lat}. ${lon} ", Toast.LENGTH_SHORT).show()
 
+            saveButton.setOnClickListener(View.OnClickListener {
 
+               // Toast.makeText(this, "You clicked item no. ${lat}. ${lon} ", Toast.LENGTH_SHORT).show()
 
                 createNotification(context = this)
 
-                    GlobalScope.launch {
 
-                        reminderRepository.addReminder(
-                            Reminder(
-                                title = title.text.toString(),
-                                message = message.text.toString(),
-                                user_id = id_user,
-                                creation_time = msg,
-                                reminder_seen = true
-                            )
+                GlobalScope.launch {
+
+                    reminderRepository.addReminder(
+                        Reminder(
+                            title = title.text.toString(),
+                            message = message.text.toString(),
+                            user_id = id_user,
+                            location_x = lat,
+                            location_y = lon,
+                            creation_time = msg,
+                            reminder_seen = true
                         )
+                    )
 
 
-                    }
+                }
+                showNotification(title.text.toString(), msg, context = this)
 
-                showNotification(title.text.toString(), msg.toString(), context = this)
-
-                val intent = Intent(this@ActivityAdd, Activityhome::class.java)
-                intent.putExtra("id", id_user)
-                startActivity(intent)
+                val int = Intent(this@ActivityAdd, Activityhome::class.java)
+                int.putExtra("id", id_user)
+                startActivity(int)
             })
 
         }
         else {
+
+            val latitude : Double = intent.getDoubleExtra("latitude" , -1.0)
+            val longitude : Double = intent.getDoubleExtra("longitude", -1.0)
+            locationButton.isEnabled = false
+
+            //Toast.makeText(this, "You clicked item no. ${latitude}. ${longitude} ", Toast.LENGTH_SHORT).show()
+            var lat : Double? = null
+            var lon : Double?= null
+
+            if (latitude!= -1.0) {
+                title.setText(titleUpdate, TextView.BufferType.EDITABLE)
+                message.setText(messageUpdate, TextView.BufferType.EDITABLE)
+               // Toast.makeText(this, "You clicked item no. ${latitude}. ${longitude} ", Toast.LENGTH_SHORT).show()
+                lat = latitude
+                lon = longitude
+            }
+            else
+            {
+                lat = null
+                lon = null
+            }
 
         createButton = findViewById(R.id.create_button)
         title.setText(titleUpdate, TextView.BufferType.EDITABLE)
@@ -176,6 +255,10 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
             }
         //////
 
+            if(latitude != -1.0){
+                msgUpdate == msg
+            }
+
         createButton.setOnClickListener(View.OnClickListener {
 
 
@@ -186,7 +269,9 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
                             title = title.text.toString(),
                             message = message.text.toString(),
                             user_id = id,
-                            creation_time = msgUpdate,
+                            location_x = lat,
+                            location_y = lon,
+                            creation_time = msg,
                             reminder_seen = true
 
                         )
@@ -211,9 +296,9 @@ class ActivityAdd(private val reminderRepository: ReminderRepository = Graph.rem
 
                 }
 
-                val intent = Intent(this@ActivityAdd, Activityhome::class.java)
-                intent.putExtra("id", id)
-                startActivity(intent)
+                val inten = Intent(this@ActivityAdd, Activityhome::class.java)
+                inten.putExtra("id", id)
+                startActivity(inten)
             })
             ///delete*/
         }

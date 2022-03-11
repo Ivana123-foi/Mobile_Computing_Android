@@ -8,7 +8,7 @@ import com.example.homeworkmc.entity.Reminder
 @Database
     (
     entities = [User:: class, Reminder::class],
-    version = 6,
+    version = 7,
     exportSchema = false
     )
 

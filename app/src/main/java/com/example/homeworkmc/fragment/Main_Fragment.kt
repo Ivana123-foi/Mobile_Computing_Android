@@ -1,7 +1,5 @@
 package com.example.homeworkmc.fragment
 
-
-
 import android.R.attr.*
 import android.content.Intent
 import android.os.Bundle
@@ -20,26 +18,43 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
-import java.time.LocalDate as LocalDate1
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.media.MediaPlayer
-import android.media.RingtoneManager
-import android.net.Uri
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.widget.RemoteViews
-import androidx.compose.ui.text.input.KeyboardType.Companion.Uri
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.example.homeworkmc.*
-
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import android.Manifest
+import android.location.LocationListener
+import android.location.LocationRequest
+import kotlinx.android.synthetic.main.activity_add.view.*
 
 class Main_Fragment(
     private val reminderRepository: ReminderRepository = Graph.reminderRepository,
     private val id_user: Long
-) : Fragment(), RecycleAdapter.OnItemClickListener {
+) : Fragment(), RecycleAdapter.OnItemClickListener, LocationListener {
 
 
+    ///location
+    private lateinit var locationManager: LocationManager
+    private var latent : Double? =null
+    private var longe : Double?=null
+    private val locationPermissionCode = 2
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest: LocationRequest
+    private var locati: Location? = null
+
+    ///
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapt: RecyclerView.Adapter<RecycleAdapter.ViewHolder>? = null
     private lateinit var v: View
@@ -47,6 +62,7 @@ class Main_Fragment(
     private lateinit var ReminderList: List<Reminder>
     private lateinit var ReminderListFobutton: List<Reminder>
     private lateinit var buttonShowAll: MaterialButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +77,7 @@ class Main_Fragment(
 
         v = inflater.inflate(R.layout.fragment_m, container, false)
 
-        //Toast.makeText(activity, text, Toast.LENGTH_SHORT).show()
+
 
         return v
 
@@ -76,7 +92,23 @@ class Main_Fragment(
 
         recycleview.apply {
 
+
             createNotification (context)
+            getLocation (context)
+
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+
+            locati = getLastLocation(context)
+
+
+
+            /*Toast.makeText(
+                activity,
+                "${locati!!.latitude}, ${locati!!.longitude}",
+                Toast.LENGTH_SHORT
+            ).show()*/
+
+
 
             GlobalScope.launch {
                 buttonShowAll = v.findViewById(R.id.showAll)
@@ -110,14 +142,26 @@ class Main_Fragment(
                     recycleview.adapter = adapt
                 })
 
-
                 //notification
                 for (reminder in ReminderListFobutton) {
-
                     if (reminder.creation_time == text) {
                         showNotification(reminder, context)
                     }
 
+                }
+                for(remid in ReminderList)
+                {
+                    if(remid.location_x!=null )
+                    {
+                        var lat = locati!!.latitude +2
+                        var long = locati!!.longitude +2
+
+                        if(remid.location_x!! >= locati!!.latitude && remid.location_y!! >= locati!!.longitude && remid.location_x!! <= lat && remid.location_y!! <= long ){
+                            showNotification(remid, context)}
+                        else{
+
+                        }
+                    }
                 }
                 ////////
 
@@ -136,8 +180,50 @@ class Main_Fragment(
 
         })
 
+    }
+
+
+    //LOCATION
+
+    private fun getLocation(context: Context) {
+        locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if ((ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            activity?.let { ActivityCompat.requestPermissions(it, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode) }
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 5f, this)
+    }
+
+    private fun getLastLocation(context: Context): Location? {
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {}
+        return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+    }
+    override fun onLocationChanged(location: Location) {
+
+        //Toast.makeText(activity, "${location.latitude} .... ${location.longitude}", Toast.LENGTH_SHORT).show()
+        /*latent= location.latitude
+        longe= location.longitude*/
+        //locati = location
 
     }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == locationPermissionCode) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(activity, "Permission Granted", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(activity, "Permission Denied", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+    }
+
 //NOTIFICATIONS
     private fun createNotification (context: Context)
     {
@@ -161,7 +247,6 @@ class Main_Fragment(
        /* var alarmSound: Uri? = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         var mp: MediaPlayer = MediaPlayer.create(context, alarmSound)
         mp.start()*/
-
 
         val contentView = RemoteViews(packageName,R.layout.notificationlayout)
         contentView.setTextViewText(R.id.notification_title, reminder.title)
