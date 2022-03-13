@@ -102,11 +102,11 @@ class Main_Fragment(
 
 
 
-            /*Toast.makeText(
+            Toast.makeText(
                 activity,
                 "${locati!!.latitude}, ${locati!!.longitude}",
                 Toast.LENGTH_SHORT
-            ).show()*/
+            ).show()
 
 
 
@@ -149,18 +149,17 @@ class Main_Fragment(
                     }
 
                 }
+
                 for(remid in ReminderList)
                 {
-                    if(remid.location_x!=null )
+                    if(remid.location_x!=null &&  remid.location_y!=null )
                     {
-                        var lat = locati!!.latitude +2
-                        var long = locati!!.longitude +2
+                            if(radius(locati!!.latitude, remid.location_x, locati!!.longitude, remid.location_y)<=2){
 
-                        if(remid.location_x!! >= locati!!.latitude && remid.location_y!! >= locati!!.longitude && remid.location_x!! <= lat && remid.location_y!! <= long ){
-                            showNotification(remid, context)}
-                        else{
+                            showNotification(remid, context)
+                            }
 
-                        }
+
                     }
                 }
                 ////////
@@ -184,6 +183,37 @@ class Main_Fragment(
 
 
     //LOCATION
+
+
+    //////
+    fun radius(lat1: Double, lat2: Double, lon1: Double, lon2: Double): Double {
+
+        var lat1 = lat1
+        var lat2 = lat2
+        var lon1 = lon1
+        var lon2 = lon2
+        lon1 = Math.toRadians(lon1)
+        lon2 = Math.toRadians(lon2)
+        lat1 = Math.toRadians(lat1)
+        lat2 = Math.toRadians(lat2)
+
+        val dlon = lon2 - lon1
+        val dlat = lat2 - lat1
+        val a = (Math.pow(Math.sin(dlat / 2), 2.0)
+                + (Math.cos(lat1) * Math.cos(lat2)
+                * Math.pow(Math.sin(dlon / 2), 2.0)))
+        val c = 2 * Math.asin(Math.sqrt(a))
+
+        // Radius of earth in kilometers. Use 3956
+        // for miles
+        val r = 6371.0
+        // calculate the result
+        return c * r
+    }
+
+
+    /////
+
 
     private fun getLocation(context: Context) {
         locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
